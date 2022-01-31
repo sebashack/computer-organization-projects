@@ -14,5 +14,8 @@ CHIP Mux16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Not(in=sel, out=notSel);
+    And16Broadcast(a=a, b=notSel, out=out0);
+    And16Broadcast(a=b, b=sel, out=out1);
+    Or16(a=out0, b=out1, out=out);
 }
