@@ -33,8 +33,8 @@ CHIP ALU4Input {
         selleft[2],
         /*
         0 0 -> x op y
-        0 1 -> x op y
-        1 0 -> x op y
+        0 1 -> x op p
+        1 0 -> x op q
         1 1 -> enable right ALU
         */
         selright[2];
