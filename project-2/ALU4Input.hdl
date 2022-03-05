@@ -1,0 +1,71 @@
+/**
+ * The ALU (Arithmetic Logic Unit).
+ * Computes one of the following functions:
+ * x+y, x-y, y-x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs, 
+ * according to 6 input bits denoted zx,nx,zy,ny,f,no.
+ * In addition, the ALU computes two 1-bit outputs:
+ * if the ALU output == 0, zr is set to 1; otherwise zr is set to 0;
+ * if the ALU output < 0, ng is set to 1; otherwise ng is set to 0.
+ */
+
+// Implementation: the ALU logic manipulates the x and y inputs
+// and operates on the resulting values, as follows:
+// if (zx == 1) set x = 0        // 16-bit constant
+// if (nx == 1) set x = !x       // bitwise not
+// if (zy == 1) set y = 0        // 16-bit constant
+// if (ny == 1) set y = !y       // bitwise not
+// if (f == 1)  set out = x + y  // integer 2's complement addition
+// if (f == 0)  set out = x & y  // bitwise and
+// if (no == 1) set out = !out   // bitwise not
+// if (out == 0) set zr = 1
+// if (out < 0) set ng = 1
+
+CHIP ALU4Input {
+    IN  
+        x[16], y[16], p[16], q[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no, // negate the out output?
+        selleft[2],
+        /*
+        0 0 -> x op y
+        0 1 -> x op y
+        1 0 -> x op y
+        1 1 -> enable right ALU
+        */
+        selright[2];
+        /*
+        0 0 -> y op q
+        0 1 -> p op q
+        1 0 -> y op p
+        1 1 -> useless op (not to be used)
+        */
+    OUT 
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+    Mux16(a=x, b=false, sel=rightenabled, out=xmuxout);
+    Mux4Way16(a=y, b=p, c=q, d=false, sel=selleft, out=ymuxout);
+
+    And(a=selleft[0], b=selleft[1], out=rightenabled);
+
+    Not(in=selright[0], out=notselright0);
+    Mux16(a=p, b=y, sel=notselright0, out=pmuxout);
+    Mux16(a=q, b=p, sel=selright[1], out=qmuxout);
+
+    // Left ALU
+    ALU(x=xmuxout, y=ymuxout, zx=zx, nx=nx, zy=zy, ny=ny, f=f, no=no, out=out0, zr=zr0, ng=ng0);
+
+    // Right ALU
+    ALU(x=pmuxout, y=qmuxout, zx=zx, nx=nx, zy=zy, ny=ny, f=f, no=no, out=out1, zr=zr1, ng=ng1);
+
+    Mux16(a=out0, b=out1, sel=rightenabled, out=out);
+    Mux(a=zr0, b=zr1, sel=rightenabled, out=zr);
+    Mux(a=ng0, b=ng1, sel=rightenabled, out=ng);
+}
