@@ -1,0 +1,19 @@
+CHIP Mux3 {
+    IN a[3], b[3], sel;
+    OUT out[3];
+
+    PARTS:
+    Not(in=sel, out=notsel);
+
+    And(a=a[0], b=notsel, out=a0);
+    And(a=a[1], b=notsel, out=a1);
+    And(a=a[2], b=notsel, out=a2);
+
+    And(a=b[0], b=sel, out=b0);
+    And(a=b[1], b=sel, out=b1);
+    And(a=b[2], b=sel, out=b2);
+
+    Or(a=a0, b=b0, out=out[0]);
+    Or(a=a1, b=b1, out=out[1]);
+    Or(a=a2, b=b2, out=out[2]);
+}
