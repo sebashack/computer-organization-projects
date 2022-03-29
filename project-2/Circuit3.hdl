@@ -1,0 +1,20 @@
+CHIP Circuit3 {
+    IN  a[16], b[16], c[16], d[16], // 1-bit inputs
+        fi, fj;
+        // fi = 0, fj = 0 -> a + b' + c
+        // fi = 1, fj = 0 -> b + c'+ d
+        // fi = 0, fj = 1 -> (a + b' + c)(b + c'+ d)
+        // fi = 1, fj = 1 -> (a + b' + c)(b + c'+ d)
+
+    OUT out[16];
+
+    PARTS:
+    // a + b' + c
+    OP3(x=a,y=b,z=c,out=o0);
+
+    // b + c'+ d
+    OP3(x=b,y=c,z=d,out=o1);
+
+    Mux16(a=o0, b=o1, sel=fi, out=sel0);
+    Mux16(a=sel0, b=false, sel=fj, out=out);
+}

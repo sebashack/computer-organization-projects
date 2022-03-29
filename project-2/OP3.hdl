@@ -1,0 +1,12 @@
+CHIP OP3 {
+    IN  
+        x[16], y[16], z[16];  // 16-bit inputs        
+    OUT 
+        out[16]; // 16-bit output
+    PARTS:
+
+    Add16(a=x, b=z, out=xz);
+    Not16(in=y, out=noty);
+    Add16(a=xz, b=noty, out=o);
+    Add16(a=o, b[0]=true, b[1..15]=false, out=out);
+}

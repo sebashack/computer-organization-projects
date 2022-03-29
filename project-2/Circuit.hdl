@@ -6,7 +6,7 @@ CHIP Circuit {
         // fi = 0, fj = 1 -> (a + b' + c) * (b + c'+ d)
         // fi = 1, fj = 1 -> (a + b' + c) * (b + c'+ d)
 
-    OUT out[3];   // 3-bit output.
+    OUT out[3];   // 3-bit output (Maximum result is 5 = 101).
 
     PARTS:
         Not(in=b, out=notb);
