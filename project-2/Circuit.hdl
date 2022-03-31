@@ -6,7 +6,7 @@ CHIP Circuit {
         // fi = 0, fj = 1 -> (a + b' + c) * (b + c'+ d)
         // fi = 1, fj = 1 -> (a + b' + c) * (b + c'+ d)
 
-    OUT out[3];   // 3-bit output (Maximum result is 5 = 101).
+    OUT out[3];   // 3-bit output (Maximum result is 4 = 100).
 
     PARTS:
         Not(in=b, out=notb);
@@ -18,15 +18,15 @@ CHIP Circuit {
         FullAdder(a=b,  b=notc,  c=d, sum=s1,  carry=c1);
 
         //   (a + b' + c) * (b + c'+ d) 
-        // = ab + ac' + ad + bb' + b'c' + bd + cb + cc' + cd
-        // = ab + ac' + ad + b'c' + bd + cb + cd
+        // = ab + ac' + ad + bb' + b'c' + b'd + cb + cc' + cd
+        // = ab + ac' + ad + b'c' + b'd + cb + cd
         // Notice that bb' = 0 and cc' = 0
         And(a=a, b=b, out=ab);
         And(a=a, b=notc, out=anotc);
         And(a=a, b=d, out=ad);
 
         And(a=notb, b=notc, out=notbnotc);
-        And(a=b, b=d, out=bd);
+        And(a=notb, b=d, out=notbd);
 
         And(a=c, b=b, out=cb);
         And(a=c, b=d, out=cd);
@@ -34,7 +34,7 @@ CHIP Circuit {
         Add3(a[0]=ab,       b[0]=anotc, out=o0);
         Add3(a[0]=ad,       b=o0,       out=o1);
         Add3(a[0]=notbnotc, b=o1,       out=o2);
-        Add3(a[0]=bd,       b=o2,       out=o3);
+        Add3(a[0]=notbd,    b=o2,       out=o3);
         Add3(a[0]=cb,       b=o3,       out=o4);
         Add3(a[0]=cd,       b=o4,       out=o5);
 
