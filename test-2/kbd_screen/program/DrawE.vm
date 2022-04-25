@@ -1,0 +1,54 @@
+function DrawE.draw_e 1
+
+push argument 0 // screen offset argument
+pop pointer 1
+
+// Horizontal
+push constant 255
+pop that 0
+
+push constant 255
+pop that 32
+
+// Vertical left
+push constant 3
+pop that 64
+
+push constant 3
+pop that 96
+
+push constant 3
+pop that 128
+
+push constant 3
+pop that 160
+
+// Horizontal
+push constant 255
+pop that 192
+
+push constant 255
+pop that 224
+
+// Vertical left
+push constant 3
+pop that 256
+
+push constant 3
+pop that 288
+
+push constant 3
+pop that 320
+
+push constant 3
+pop that 352
+
+// Horizontal
+push constant 255
+pop that 384
+
+push constant 255
+pop that 416
+
+push constant 0
+return
