@@ -9,6 +9,9 @@ call DrawS.draw_s 1
 push constant 16385 // character screen offset
 call DrawE.draw_e 1
 
+push constant 16386 // character screen offset
+call DrawB.draw_b 1
+
 push constant 17024 // character screen offset
 call DrawS.draw_s 1
 

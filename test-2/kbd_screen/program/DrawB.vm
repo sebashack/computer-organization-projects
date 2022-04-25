@@ -1,0 +1,94 @@
+function DrawB.draw_b 1
+
+push argument 0 // screen offset argument
+pop pointer 1
+
+// Horizontal
+push constant 255
+pop that 0
+
+push constant 255
+pop that 32
+
+// Vertical left and right
+push constant 63
+not
+push constant 255
+and
+push constant 3
+or
+pop that 64
+
+push constant 63
+not
+push constant 255
+and
+push constant 3
+or
+pop that 96
+
+push constant 63
+not
+push constant 255
+and
+push constant 3
+or
+pop that 128
+
+// Horizontal
+push constant 255
+pop that 160
+
+push constant 255
+pop that 192
+
+// Vertical left and right
+push constant 63
+not
+push constant 255
+and
+push constant 3
+or
+pop that 224
+
+push constant 63
+not
+push constant 255
+and
+push constant 3
+or
+pop that 256
+
+push constant 63
+not
+push constant 255
+and
+push constant 3
+or
+pop that 288
+
+push constant 63
+not
+push constant 255
+and
+push constant 3
+or
+pop that 320
+
+push constant 63
+not
+push constant 255
+and
+push constant 3
+or
+pop that 352
+
+// Vertical left and right
+push constant 255
+pop that 384
+
+push constant 255
+pop that 416
+
+push constant 0
+return
