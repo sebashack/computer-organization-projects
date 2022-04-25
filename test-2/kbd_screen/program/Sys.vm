@@ -1,6 +1,15 @@
 function Sys.init 0
 
+// SCREEN: 16384
+// Row delta: 640
+
 push constant 16384 // character screen offset
+call DrawS.draw_s 1
+
+push constant 16385 // character screen offset
+call DrawS.draw_s 1
+
+push constant 17024 // character screen offset
 call DrawS.draw_s 1
 
 label WHILE
