@@ -12,22 +12,44 @@ pop static 1 // Row cursor
 
 label LOOP
 
+
+// DRAW S
 push that 24576 // keyboard
 push constant 83 // S
 eq
 if-goto DRAW_S
 
 push that 24576 // keyboard
+push constant 115 // s
+eq
+if-goto DRAW_S
+
+
+// DRAW E
+push that 24576 // keyboard
 push constant 69 // E
 eq
 if-goto DRAW_E
 
 push that 24576 // keyboard
+push constant 101 // e
+eq
+if-goto DRAW_E
+
+
+// DRAW B
+push that 24576 // keyboard
 push constant 66 // B
 eq
 if-goto DRAW_B
 
+push that 24576 // keyboard
+push constant 98 // b
+eq
+if-goto DRAW_B
+
 goto LOOP
+
 
 label DRAW_S
 push static 0 // character screen offset
