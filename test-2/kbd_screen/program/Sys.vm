@@ -1,0 +1,7 @@
+function Sys.init 0
+
+push constant 16384 // character screen offset
+call DrawS.draw_s 1
+
+label WHILE
+goto WHILE // loop infinetly
