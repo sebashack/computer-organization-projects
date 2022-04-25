@@ -4,7 +4,7 @@ function Sys.init 0
 // KEYBOARD: 24576
 // Row delta: 640
 
-push constant 16384
+push constant 16384 // SCREEN ADDR
 pop static 0 // Column cursor
 
 push constant 0
