@@ -91,4 +91,7 @@ push constant 255
 pop that 416
 
 push constant 0
+pop pointer 1
+
+push constant 0
 return

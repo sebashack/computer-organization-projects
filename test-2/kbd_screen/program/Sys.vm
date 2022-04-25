@@ -1,19 +1,70 @@
 function Sys.init 0
 
 // SCREEN: 16384
+// KEYBOARD: 24576
 // Row delta: 640
 
-push constant 16384 // character screen offset
-call DrawS.draw_s 1
+push constant 16384
+pop static 0 // Column cursor
 
-push constant 16385 // character screen offset
+label LOOP
+
+push that 24576 // keyboard
+push constant 83 // S
+eq
+if-goto DRAW_S
+
+push that 24576 // keyboard
+push constant 69 // E
+eq
+if-goto DRAW_E
+
+push that 24576 // keyboard
+push constant 66 // B
+eq
+if-goto DRAW_B
+
+goto LOOP
+
+label DRAW_S
+push static 0 // character screen offset
+call DrawS.draw_s 1
+goto WAIT
+
+label DRAW_E
+push static 0 // character screen offset
 call DrawE.draw_e 1
+goto WAIT
 
-push constant 16386 // character screen offset
+label DRAW_B
+push static 0 // character screen offset
 call DrawB.draw_b 1
+goto WAIT
 
-push constant 17024 // character screen offset
-call DrawS.draw_s 1
+label WAIT
+push that 24576 // keyboard
+push constant 0 // No key
+eq
+if-goto UPDATE_CURSOR
+goto WAIT
 
-label WHILE
-goto WHILE // loop infinetly
+label UPDATE_CURSOR
+push static 0
+push constant 1
+add
+pop static 0 // Update cursor
+goto LOOP
+
+
+
+//push constant 16384 // character screen offset
+//call DrawS.draw_s 1
+// 
+// push constant 16385 // character screen offset
+// call DrawE.draw_e 1
+// 
+// push constant 16386 // character screen offset
+// call DrawB.draw_b 1
+// 
+// push constant 17024 // character screen offset
+// call DrawS.draw_s 1

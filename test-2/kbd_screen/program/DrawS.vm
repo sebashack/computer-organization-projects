@@ -67,4 +67,7 @@ push constant 255
 pop that 384
 
 push constant 0
+pop pointer 1
+
+push constant 0
 return
